@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sushankh - Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #2c3e50;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #6c757d;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follow {
+            width: 8px;
+            height: 8px;
+            background: #6c757d;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Section Styling */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .section-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #f1f3f4 0%, #e8eaed 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 400;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .hero-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: #6c757d;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .hero-statue {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .statue-image {
+            width: 350px;
+            height: 450px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 15px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+            transition: all 0.6s ease;
+            filter: grayscale(100%);
+            background: #f8f9fa;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .statue-image:hover {
+            filter: grayscale(0%);
+            transform: translateY(-10px);
+        }
+
+        /* Fallback styling for missing images */
+        .statue-image:not([src]), .statue-image[src=""] {
+            background: linear-gradient(135deg, #dee2e6 0%, #c1c5c9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .statue-image:not([src])::before, .statue-image[src=""]::before {
+            content: "Image\APlaceholder";
+            white-space: pre;
+        }
+
+        /* About Section add from  /Desktop/Portfolio/about.txt*/
+
+
+        .about-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-content {
+            order: 1;
+        }
+
+        .about-image {
+            order: 2;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: #495057;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .skills-list {
+            list-style: none;
+        }
+
+        .skills-list li {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            font-weight: 400;
+        }
+
+        .skills-list li::before {
+            content: "01";
+            position: absolute;
+            left: 0;
+            color: #6c757d;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .skills-list li:nth-child(2)::before { content: "02"; }
+        .skills-list li:nth-child(3)::before { content: "03"; }
+        .skills-list li:nth-child(4)::before { content: "04"; }
+        .skills-list li:nth-child(5)::before { content: "05"; }
+
+        /* Projects Section */
+        .projects-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .projects-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .projects-content {
+            order: 2;
+        }
+
+        .projects-image {
+            order: 1;
+            text-align: center;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .project-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .project-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .project-item p {
+            color: #6c757d;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .quote-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .quote-content {
+            order: 1;
+            text-align: center;
+        }
+
+        .quote-image {
+            order: 2;
+            text-align: center;
+        }
+
+        .quote-marks {
+            font-size: 6rem;
+            color: #dee2e6;
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+            margin-bottom: 30px;
+        }
+
+        .quote-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #2c3e50;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .quote-author {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+            position: relative;
+            padding-top: 20px;
+        }
+
+        .quote-author::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: #dee2e6;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, #f1f3f4 0%, #e8eaed 100%);
+        }
+
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .contact-item p {
+            color: #6c757d;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        /* Navigation */
+        .nav-progress {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(108, 117, 125, 0.3);
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot.active {
+            background: #6c757d;
+            transform: scale(1.2);
+        }
+
+        .nav-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 25px;
+            transform: translateY(-50%);
+            width: 0;
+            height: 2px;
+            background: #6c757d;
+            transition: width 0.3s ease;
+        }
+
+        .nav-dot.active::after {
+            width: 40px;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #6c757d;
+            font-size: 0.9rem;
+            z-index: 100;
+            opacity: 0;
+            animation: fadeInOut 3s ease-in-out infinite;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3.5rem; }
+            .hero-name { font-size: 2.5rem; }
+            .section-title { font-size: 2.5rem; }
+            .hero-main,
+            .about-layout,
+            .projects-layout,
+            .quote-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .statue-image { width: 280px; height: 360px; }
+            .section-card { padding: 40px 30px; }
+            .quote-text { font-size: 1.4rem; }
+            .hero-description { font-size: 1.1rem; }
+        }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- HTML editing and stuff  😘 -->
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follow"></div>
+
+
+
+
+
+
+
+
+
+    <!-- Navigation -->
+    <div class="nav-progress">
+        <div class="nav-dot active" data-section="0"></div>
+        <div class="nav-dot" data-section="1"></div>
+        <div class="nav-dot" data-section="2"></div>
+        <div class="nav-dot" data-section="3"></div>
+        <div class="nav-dot" data-section="4"></div>
+    </div>
+
+    
+    
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        ↓ Scroll to explore my journey ↓
+    </div>
+
+
+
+
+
+    <!-- Hero Section -->
+    <section class="section hero-section" id="section-0">
+        <div class="container">
+            <div class="section-card active">
+                <div class="hero-header">
+                    <div class="hero-subtitle">Digital Portfolio</div>
+                    <div class="hero-subtitle">by</div>
+                    <div class="hero-title">SUSHANKH</div>
+                </div>
+                <div class="hero-main">
+                    <div class="hero-content">
+                        <div class="hero-description">
+                            Crafting digital experiences with the precision of ancient artisans 
+                            and the innovation of modern technology. Every project is a masterpiece 
+                            sculpted from code, design, and vision.
+                        </div>
+                    </div>
+                    <div class="hero-statue">
+                        <img src="assets/mark.jpg" alt="Greek Statue" class="statue-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="section-1">
+        <div class="container">
+            <div class="section-card">
+                <div class="about-layout">
+                    <div class="about-content">
+                        <h2 class="section-title">About Me</h2>
+                        <p class="section-subtitle">The Journey</p>
+                        <p class="section-description">
+                            Like the great philosophers of Athens, I believe in the pursuit of knowledge 
+                            and excellence. My journey in technology began with curiosity and has evolved 
+                            into a passion for creating meaningful digital experiences that bridge the 
+                            gap between functionality and beauty.
+                        </p>
+                        <ul class="skills-list">
+                            <li>Frontend Development & Modern Frameworks</li>
+                            <li>Backend Systems & API Architecture</li>
+                            <li>UI/UX Design & User Experience</li>
+                            <li>Digital Strategy & Innovation</li>
+                            <li>Project Leadership & Team Collaboration</li>
+                        </ul>
+                    </div>
+                    <div class="about-image">
+                        <img src="assets/left.jpg" alt="Greek Philosopher" class="statue-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section projects-section" id="section-2">
+        <div class="container">
+            <div class="section-card">
+                <div class="projects-layout">
+                    <div class="projects-image">
+                        <img src="assets/arch.jpg" alt="Greek Architecture" class="statue-image">
+                    </div>
+                    <div class="projects-content">
+                        <h2 class="section-title">Projects</h2>
+                        <p class="section-subtitle">Digital Masterpieces</p>
+                        <p class="section-description">
+                            Each project represents a conquest over complexity, a triumph of vision 
+                            over limitation. Like the great architects of antiquity, I build with 
+                            purpose, precision, and passion.
+                        </p>
+                        <div class="projects-grid">
+                            <div class="project-item">
+                                <h3>Project Olympus</h3>
+                                <p>A revolutionary platform connecting innovation with execution</p>
+                            </div>
+                            <div class="project-item">
+                                <h3>Sparta Framework</h3>
+                                <p>Minimalist development tools for maximum efficiency</p>
+                            </div>
+                            <div class="project-item">
+                                <h3>Athens Analytics</h3>
+                                <p>Data visualization that transforms complexity into clarity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="section quote-section" id="section-3">
+        <div class="container">
+            <div class="section-card">
+                <div class="quote-layout">
+                    <div class="quote-content">
+                        <div class="quote-marks">"</div>
+                        <div class="quote-text">
+                            Excellence is not a skill, it's an attitude. In every line of code, 
+                            every pixel placed, every decision made, we have the opportunity 
+                            to create something extraordinary.
+                        </div>
+                        <div class="quote-author">— Sushankh</div>
+                    </div>
+                    <div class="quote-image">
+                        <img src="assets/anger.jpg" alt="Greek Statue" class="statue-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact-section" id="section-4">
+        <div class="container">
+            <div class="section-card">
+                <div class="contact-content">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <p class="section-subtitle">Let's Create Something Amazing</p>
+                    <p class="section-description">
+                        Ready to embark on a digital odyssey? Whether you're looking to build 
+                        something revolutionary or refine something existing, let's collaborate 
+                        to bring your vision to life.
+                    </p>
+                    <div class="contact-grid">
+                        <div class="contact-item">
+                            <h3>📧 Email</h3>
+                            <p>sushankhkhadase04@gmail.com</p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>💼 LinkedIn</h3>
+                            <p>linkedin.com/in/sushankh</p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>🚀 GitHub</h3>
+                            <p>github.com/sushankhs</p>
+                        </div>
+                        <div class="contact-item">
+                            <h3>📱 Phone</h3>
+                            <p>+91 7758054870</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize variables
+        let currentSection = 0;
+        const sections = document.querySelectorAll('.section');
+        const sectionCards = document.querySelectorAll('.section-card');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollow = document.querySelector('.cursor-follow');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollow.style.left = e.clientX + 'px';
+                cursorFollow.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        // Smooth scroll handling
+        let isScrolling = false;
+        
+        window.addEventListener('wheel', (e) => {
+            if (isScrolling) return;
+            
+            isScrolling = true;
+            
+            if (e.deltaY > 0 && currentSection < sections.length - 1) {
+                currentSection++;
+                updateSection();
+            } else if (e.deltaY < 0 && currentSection > 0) {
+                currentSection--;
+                updateSection();
+            }
+            
+            setTimeout(() => {
+                isScrolling = false;
+            }, 1000);
+        });
+
+        // Navigation dots
+        navDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSection = index;
+                updateSection();
+            });
+        });
+
+        // Update section
+        function updateSection() {
+            // Hide scroll indicator after first scroll
+            if (currentSection > 0) {
+                scrollIndicator.style.display = 'none';
+            } else {
+                scrollIndicator.style.display = 'block';
+            }
+
+            // Update navigation dots
+            navDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSection);
+            });
+
+            // Smooth scroll to section
+            sections[currentSection].scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            // Update section cards
+            setTimeout(() => {
+                sectionCards.forEach((card, index) => {
+                    card.classList.toggle('active', index === currentSection);
+                });
+            }, 300);
+        }
+
+        // Intersection Observer for smooth animations
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionIndex = Array.from(sections).indexOf(entry.target);
+                    currentSection = sectionIndex;
+                    
+                    // Update navigation
+                    navDots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentSection);
+                    });
+                    
+                    // Update section cards
+                    sectionCards.forEach((card, index) => {
+                        card.classList.toggle('active', index === currentSection);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Hover effects for interactive elements
+        document.querySelectorAll('.contact-item, .project-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                cursor.style.borderColor = '#2c3e50';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.borderColor = '#6c757d';
+            });
+        });
+
+        // Statue image hover effects
+        document.querySelectorAll('.statue-image').forEach(img => {
+            img.addEventListener('mouseenter', () => {
+                img.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            img.addEventListener('mouseleave', () => {
+                img.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Initialize
+        updateSection();
+    </script>
+</body>
+</html>
+Smart, efficient model for everyday use Learn more
